@@ -17,12 +17,12 @@
             android:layout_marginTop="16dp"
             android:layout_alignParentTop="true">
 
-            <com.xw.repo.XEditText
+            <EditText
                 android:id="@+id/nonPygLatin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:hint="@string/word_in_other_language"
+                android:hint="@string/your_words_in_pyglatin"
                 android:textColor="#000"
                 android:textSize="30sp"
                 android:padding="8dp"
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:hint="@string/your_words_in_pyglatin"
+                android:hint="@string/word_in_other_language"
                 android:background="@drawable/back"
                 android:textColor="#000"
                 android:padding="8dp"
@@ -60,7 +60,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/copy"
                     android:onClick="copyTranslation"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:enabled="false"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
                     android:onClick="onShareClicked"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_marginRight="16dp"
+                    android:enabled="false"/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -78,7 +80,7 @@
                     android:onClick="goToDetranslator"
                     android:layout_gravity="center"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/useDetranslator"/>
+                    android:id="@+id/useDetranslator" />
 
             </LinearLayout>
 

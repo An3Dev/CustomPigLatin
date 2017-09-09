@@ -1,15 +1,18 @@
 package an3enterprises.codemaker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditingActivity extends AppCompatActivity {
 
@@ -23,12 +26,20 @@ public class EditingActivity extends AppCompatActivity {
     // how many letters are cut
     SeekBar lettersCutSeekBar;
 
-    TextView seekBarValue0;
-    TextView seekBarValue1;
-    TextView seekBarValue2;
-    TextView seekBarValue3;
-    TextView seekBarValue4;
-    TextView seekBarValue5;
+    TextView seekBarValueTextView;
+
+
+    String endPhrase;
+    String endPhraseBeginning;
+    String userInputPreview;
+    String startingPhrase;
+    String cutWord;
+    String userInputPreviewLower;
+
+    Toast toast;
+
+    long indexOfUpper;
+    int seekBarValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,85 +50,32 @@ public class EditingActivity extends AppCompatActivity {
         editingModeTextView = (TextView) findViewById(R.id.editingModeTextView);
         previewTextView = (TextView) findViewById(R.id.preview_text_view);
         lettersCutSeekBar = (SeekBar) findViewById(R.id.letters_cut_seek_bar);
-        seekBarValue0 = (TextView) findViewById(R.id.seek_bar_value_0);
-        seekBarValue1 = (TextView) findViewById(R.id.seek_bar_value_1);
-        seekBarValue2 = (TextView) findViewById(R.id.seek_bar_value_2);
-        seekBarValue3 = (TextView) findViewById(R.id.seek_bar_value_3);
-        seekBarValue4 = (TextView) findViewById(R.id.seek_bar_value_4);
-        seekBarValue5 = (TextView) findViewById(R.id.seek_bar_value_5);
+        seekBarValueTextView = (TextView) findViewById(R.id.seek_bar_value);
 
         // First, set seek bar value to 1
-        lettersCutSeekBar.setProgress(1);
+        lettersCutSeekBar.setProgress(0);
         // Then, set the onSeekBarChangeListener
         lettersCutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 // Show SeekBar value
 
-                if (i == 0) {
-                    seekBarValue0.setVisibility(View.VISIBLE);
-                    seekBarValue1.setVisibility(View.INVISIBLE);
-                    seekBarValue2.setVisibility(View.INVISIBLE);
-                    seekBarValue3.setVisibility(View.INVISIBLE);
-                    seekBarValue4.setVisibility(View.INVISIBLE);
-                    seekBarValue5.setVisibility(View.INVISIBLE);
-                }
-
-                if (i == 1) {
-                    seekBarValue0.setVisibility(View.INVISIBLE);
-                    seekBarValue1.setVisibility(View.VISIBLE);
-                    seekBarValue2.setVisibility(View.INVISIBLE);
-                    seekBarValue3.setVisibility(View.INVISIBLE);
-                    seekBarValue4.setVisibility(View.INVISIBLE);
-                    seekBarValue5.setVisibility(View.INVISIBLE);
-                }
-
-                if (i == 2) {
-                    seekBarValue0.setVisibility(View.INVISIBLE);
-                    seekBarValue1.setVisibility(View.INVISIBLE);
-                    seekBarValue2.setVisibility(View.VISIBLE);
-                    seekBarValue3.setVisibility(View.INVISIBLE);
-                    seekBarValue4.setVisibility(View.INVISIBLE);
-                    seekBarValue5.setVisibility(View.INVISIBLE);
-                }
-
-                if (i == 3) {
-                    seekBarValue0.setVisibility(View.INVISIBLE);
-                    seekBarValue1.setVisibility(View.INVISIBLE);
-                    seekBarValue2.setVisibility(View.INVISIBLE);
-                    seekBarValue3.setVisibility(View.VISIBLE);
-                    seekBarValue4.setVisibility(View.INVISIBLE);
-                    seekBarValue5.setVisibility(View.INVISIBLE);
-                }
-
-                if (i == 4) {
-                    seekBarValue0.setVisibility(View.INVISIBLE);
-                    seekBarValue1.setVisibility(View.INVISIBLE);
-                    seekBarValue2.setVisibility(View.INVISIBLE);
-                    seekBarValue3.setVisibility(View.INVISIBLE);
-                    seekBarValue4.setVisibility(View.VISIBLE);
-                    seekBarValue5.setVisibility(View.INVISIBLE);
-                }
-
-                if (i == 5) {
-                    seekBarValue0.setVisibility(View.INVISIBLE);
-                    seekBarValue1.setVisibility(View.INVISIBLE);
-                    seekBarValue2.setVisibility(View.INVISIBLE);
-                    seekBarValue3.setVisibility(View.INVISIBLE);
-                    seekBarValue4.setVisibility(View.INVISIBLE);
-                    seekBarValue5.setVisibility(View.VISIBLE);
-                }
+                seekBarValueTextView.setText(i + "");
+                seekBarValue = i;
+                translatePreview(seekBarValue);
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                seekBarValue = seekBar.getProgress();
+                translatePreview(seekBarValue);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                seekBarValue = seekBar.getProgress();
+                translatePreview(seekBarValue);
             }
         });
 
@@ -136,7 +94,7 @@ public class EditingActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                translatePreview(seekBarValue);
             }
 
             @Override
@@ -151,10 +109,93 @@ public class EditingActivity extends AppCompatActivity {
     public void goToCodeMakingActivity(View view) {
         Intent intent = new Intent(EditingActivity.this, CodeMakingActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
-    public void translate() {
-        
+    public void translatePreview(int seekBarValueInt) {
+        endPhrase = endPhraseEditText.getText().toString();
+//        userInputPreview = getResources().getString(R.string.preview);
+        userInputPreview = "HeLlO";
+
+        String num = identifyUppercase(userInputPreview);
+        Log.d("Andres", num + "");
+
+
+
+        userInputPreviewLower = userInputPreview.toLowerCase();
+//        Log.d("Andres", endPhrase);
+//        Log.d("Andres", seekBarValueInt + "");
+        if (seekBarValueInt != 0) {
+            try {
+                endPhraseBeginning = userInputPreviewLower.substring(0, seekBarValueInt);
+            } catch (StringIndexOutOfBoundsException s) {
+                showToast(EditingActivity.this, "Nope", 0);
+            }
+            try {
+                startingPhrase = userInputPreviewLower.substring(seekBarValueInt, userInputPreviewLower.length());
+            } catch (StringIndexOutOfBoundsException s2) {
+                showToast(EditingActivity.this, "Nope2", 0);
+            }
+
+            cutWord = startingPhrase + endPhraseBeginning;
+
+            String cutWordSub = "";
+            for (int i = 0; i < cutWord.length(); i++){
+                
+                for (int n = 0; n < num.length(); n++) {
+
+                    if (i == n) {
+
+                        try {
+                            String character = cutWord.charAt(n) + "";
+                            Toast.makeText(this, "" + n, Toast.LENGTH_SHORT).show();
+                            cutWordSub = cutWord.substring(0, n) + character.toUpperCase() + cutWord.substring(n + 1);
+//                            showToast(EditingActivity.this, cutWordSub, 0);
+                        }
+                        catch (StringIndexOutOfBoundsException s) {
+                            showToast(EditingActivity.this, "Nope3", 1);
+                        }
+                    }
+                }
+            }
+
+            previewTextView.setText(cutWord);
+        }
+        else {
+            previewTextView.setText(userInputPreview);
+        }
+    }
+
+    public String identifyUppercase(String word) {
+        String capString = "";
+        for (int i = 0; i < word.length(); i++){
+            if (isUpperCase(word.charAt(i) + "")) {
+                capString = capString + i;
+            }
+            //Process char
+        }
+        return capString;
+    }
+
+    public boolean isUpperCase(String string) {
+        boolean hasUppercase = !string.equals(string.toLowerCase());
+        if (!hasUppercase) {
+            return false;
+        }
+        if (hasUppercase) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public void showToast(Context context, String message, int duration) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(context, message, duration);
+        toast.show();
     }
 
 }

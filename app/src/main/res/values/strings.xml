@@ -7,7 +7,7 @@
     <string name="starting_cut">Letters Cut From Beginning</string>
     <string name="example_sample">Preview</string>
     <string name="word_in_pyg_latin_hint">"Word in PygLatin"</string>
-    <string name="word_in_other_language">"Some words"</string>
+    <string name="word_in_other_language">"Translation"</string>
     <string name="your_words_in_pyglatin">Enter word or phrase</string>
     <string name="pig_latin_translator">PigLatin Translator</string>
     <string name="pig_latin_detranslator">PigLatin Detranslator</string>

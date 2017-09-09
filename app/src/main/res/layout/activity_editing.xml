@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:text="@string/starting_cut"
             android:textColor="#000"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp" />
 
@@ -77,98 +77,21 @@
             android:layout_margin="16dp"
             android:max="5" />
 
-        <LinearLayout
+
+
+        <TextView
+            android:id="@+id/seek_bar_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="6">
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_horizontal"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="0"/>
 
-            <TextView
-                android:id="@+id/seek_bar_value_0"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/seek_bar_value_1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/seek_bar_value_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/seek_bar_value_3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/seek_bar_value_4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="4"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/seek_bar_value_5"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="5"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="invisible" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/button"

@@ -8,14 +8,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditingActivity">
+        <activity android:name=".EditingActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CodeMakingActivity"></activity>
+        <activity android:name=".CodeMakingActivity"
+            android:label="@string/use_translator"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name=".CodeDetranslator"
+            android:label="@string/use_detranslator"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+
+        </activity>
     </application>
 
 </manifest>
