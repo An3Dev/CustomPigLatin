@@ -35,6 +35,7 @@ public class EditingActivity extends AppCompatActivity {
     String startingPhrase;
     String cutWord;
     String userInputPreviewLower;
+    String cutWordSub;
 
     Toast toast;
 
@@ -114,10 +115,10 @@ public class EditingActivity extends AppCompatActivity {
 
     public void translatePreview(int seekBarValueInt) {
         endPhrase = endPhraseEditText.getText().toString();
-//        userInputPreview = getResources().getString(R.string.preview);
-        userInputPreview = "HeLlO";
+        userInputPreview = getResources().getString(R.string.preview);
+//        userInputPreview = "HeLlO";
 
-        String num = identifyUppercase(userInputPreview);
+        String[] num = identifyUppercase(userInputPreview).split("(?!^)");
         Log.d("Andres", num + "");
 
 
@@ -139,17 +140,16 @@ public class EditingActivity extends AppCompatActivity {
 
             cutWord = startingPhrase + endPhraseBeginning;
 
-            String cutWordSub = "";
+            cutWordSub = cutWord;
             for (int i = 0; i < cutWord.length(); i++){
                 
-                for (int n = 0; n < num.length(); n++) {
+                for (String n : num) {
 
-                    if (i == n) {
+                    if (i == Long.parseLong(n)) {
 
                         try {
-                            String character = cutWord.charAt(n) + "";
-                            Toast.makeText(this, "" + n, Toast.LENGTH_SHORT).show();
-                            cutWordSub = cutWord.substring(0, n) + character.toUpperCase() + cutWord.substring(n + 1);
+                            String character = cutWordSub.charAt((int)Long.parseLong(n)) + "";
+                            cutWordSub = cutWordSub.substring(0, (int)Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int)Long.parseLong(n) + 1);
 //                            showToast(EditingActivity.this, cutWordSub, 0);
                         }
                         catch (StringIndexOutOfBoundsException s) {
@@ -158,6 +158,8 @@ public class EditingActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            cutWord = cutWordSub;
 
             previewTextView.setText(cutWord);
         }
