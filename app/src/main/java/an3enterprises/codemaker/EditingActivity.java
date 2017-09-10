@@ -14,6 +14,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class EditingActivity extends AppCompatActivity {
 
     // Where user enters ending letters
@@ -36,6 +38,7 @@ public class EditingActivity extends AppCompatActivity {
     String cutWord;
     String userInputPreviewLower;
     String cutWordSub;
+    String completedSentence;
 
     Toast toast;
 
@@ -116,56 +119,94 @@ public class EditingActivity extends AppCompatActivity {
     public void translatePreview(int seekBarValueInt) {
         endPhrase = endPhraseEditText.getText().toString();
         userInputPreview = getResources().getString(R.string.preview);
-//        userInputPreview = "HeLlO";
 
         String[] num = identifyUppercase(userInputPreview).split("(?!^)");
         Log.d("Andres", num + "");
 
-
-
         userInputPreviewLower = userInputPreview.toLowerCase();
+
+        String[] wordList = userInputPreview.split("[ ]");
+
+        ArrayList<String> translatedList = new ArrayList<>();
+        translatedList.clear();
+        Toast.makeText(this, "" + translatedList, Toast.LENGTH_SHORT).show();
 //        Log.d("Andres", endPhrase);
 //        Log.d("Andres", seekBarValueInt + "");
-        if (seekBarValueInt != 0) {
-            try {
-                endPhraseBeginning = userInputPreviewLower.substring(0, seekBarValueInt);
-            } catch (StringIndexOutOfBoundsException s) {
-                showToast(EditingActivity.this, "Nope", 0);
-            }
-            try {
-                startingPhrase = userInputPreviewLower.substring(seekBarValueInt, userInputPreviewLower.length());
-            } catch (StringIndexOutOfBoundsException s2) {
-                showToast(EditingActivity.this, "Nope2", 0);
-            }
 
-            cutWord = startingPhrase + endPhraseBeginning;
+        for (String word : wordList) {
+            if (seekBarValueInt != 0) {
+                try {
+                    endPhraseBeginning = word.substring(0, seekBarValueInt);
+                } catch (StringIndexOutOfBoundsException s) {
+                    showToast(EditingActivity.this, "Nope", 0);
+                }
+                try {
+                    startingPhrase = word.substring(seekBarValueInt, word.length());
+                } catch (StringIndexOutOfBoundsException s2) {
+                    showToast(EditingActivity.this, "Nope2", 0);
+                }
 
-            cutWordSub = cutWord;
-            for (int i = 0; i < cutWord.length(); i++){
-                
-                for (String n : num) {
+                cutWord = startingPhrase + endPhraseBeginning;
 
-                    if (i == Long.parseLong(n)) {
+                cutWordSub = cutWord;
+                for (int i = 0; i < cutWord.length(); i++) {
+
+                    for (String n : num) {
 
                         try {
-                            String character = cutWordSub.charAt((int)Long.parseLong(n)) + "";
-                            cutWordSub = cutWordSub.substring(0, (int)Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int)Long.parseLong(n) + 1);
+
+                            if (i == Long.parseLong(n)) {
+
+                                try {
+                                    String character = cutWordSub.charAt((int) Long.parseLong(n)) + "";
+                                    cutWordSub = cutWordSub.substring(0, (int) Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int) Long.parseLong(n) + 1);
 //                            showToast(EditingActivity.this, cutWordSub, 0);
-                        }
-                        catch (StringIndexOutOfBoundsException s) {
-                            showToast(EditingActivity.this, "Nope3", 1);
+                                } catch (StringIndexOutOfBoundsException s) {
+                                    showToast(EditingActivity.this, "Nope3", 1);
+                                }
+                            }
+                        } catch (NumberFormatException NFE) {
+//
                         }
                     }
                 }
+
+                cutWord = cutWordSub;
+
+                int numOfCaps = 0;
+                for (int i = 0; i < cutWord.length(); i++) {
+                    if (isUpperCase(cutWord.charAt(i) + "")) {
+                        numOfCaps += 1;
+                    }
+                }
+                if (numOfCaps > 1) {
+                    translatedList.add(cutWord + endPhrase.toUpperCase());
+
+                } else {
+                    translatedList.add(cutWord + endPhrase);
+                }
+            } else {
+                int numOfCaps = 0;
+                for (int i = 0; i < word.length(); i++) {
+                    if (isUpperCase(word.charAt(i) + "")) {
+                        numOfCaps += 1;
+                    }
+                }
+                if (numOfCaps > 1) {
+                    translatedList.add(word + endPhrase.toUpperCase());
+                } else {
+                    translatedList.add(word + endPhrase);
+                }
+
             }
 
-            cutWord = cutWordSub;
+            completedSentence = addSpaceForEveryWord(completedSentence, translatedList);
 
-            previewTextView.setText(cutWord);
         }
-        else {
-            previewTextView.setText(userInputPreview);
-        }
+
+
+
+        previewTextView.setText(completedSentence.trim());
     }
 
     public String identifyUppercase(String word) {
@@ -198,6 +239,13 @@ public class EditingActivity extends AppCompatActivity {
         }
         toast = Toast.makeText(context, message, duration);
         toast.show();
+    }
+
+    public String addSpaceForEveryWord(String sentence, ArrayList<String> transList) {
+        for (String words : transList) {
+            sentence = sentence + words + " ";
+        }
+        return sentence;
     }
 
 }
