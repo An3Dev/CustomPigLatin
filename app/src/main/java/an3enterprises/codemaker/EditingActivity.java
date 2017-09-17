@@ -3,6 +3,7 @@ package an3enterprises.codemaker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +40,9 @@ public class EditingActivity extends AppCompatActivity {
     String cutWordSub;
     String completedSentence;
     String originalWord;
+    String endPunctuation;
+    boolean addPunctuation;
+    static String endPhraseStatic;
 
     Toast toast;
 
@@ -99,6 +103,7 @@ public class EditingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 translatePreview(seekBarValue);
+                endPhraseStatic = charSequence.toString();
             }
 
             @Override
@@ -135,8 +140,25 @@ public class EditingActivity extends AppCompatActivity {
         for (String word : wordList) {
             originalWord = word;
             completedSentence = "";
+
+            if (word.contains("[.]")) {
+                Snackbar.make(findViewById(R.id.seek_bar_value), "" + originalWord, Snackbar.LENGTH_SHORT).show();
+                endPunctuation = originalWord.substring(originalWord.indexOf("[.,?!;:]"));
+            }
+
+            //split by letter
             String[] num = identifyUppercase(originalWord).split("(?!^)");
 //            String[] num = identifyUppercase(originalWord).toCharArray();
+
+//            Ends with non letter
+//            if (!originalWord.toLowerCase().substring(originalWord.length() - 1, originalWord.length()).equals("[abcdefghijklmnopqrstuvwxyzáéíóúàèìòùäëïöüāēīōū]")) {
+//                endPunctuation = originalWord.toLowerCase().substring(originalWord.length() - 1, originalWord.length());
+//                addPunctuation = true;
+//            }
+//            else {
+//                endPunctuation = null;
+//                addPunctuation = false;
+//            }
 
 
             if (seekBarValueInt != 0) {
@@ -296,41 +318,6 @@ public class EditingActivity extends AppCompatActivity {
             return false;
         }
     }
-
-//    public void translatePreview(int seekBarValue) {
-//        String latin = "";
-//        endPhrase = endPhraseEditText.getText().toString();
-//        userInputPreview = getResources().getString(R.string.preview);
-//        int i = 0;
-//        while (i < userInputPreview.length()) {
-//            while (i < userInputPreview.length() && !isLetter(userInputPreview.charAt(i))) {
-//                latin = latin + userInputPreview.charAt(i);
-//                i++;
-//            }
-//            if (i >= userInputPreview.length())
-//                break;
-//            int begin = i;
-//            while (i < userInputPreview.length() && isLetter(userInputPreview.charAt(i))) {
-//                i++;
-//            }
-//            int end = i;
-//            latin = latin + pigWord(userInputPreview.substring(begin, end));
-//        }
-//        previewTextView.setText(latin);
-//    }
-//
-//    public boolean isLetter(char c) {
-//        return ((c >= 'A' && c <= 'z') || (c >= 'a' && c <= 'z'));
-//    }
-//
-//    public String pigWord(String word) {
-////        int split = firstVowel(word);
-////        if (split == 0) {
-////            return word.substring(split) + word.substring(0, split) + "way";
-////        } else {
-//            return cutWord + endPhrase;
-////        }
-//    }
 
 
 }
