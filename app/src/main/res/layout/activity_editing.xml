@@ -94,6 +94,29 @@
             android:text="0"/>
 
 
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_suffix_num"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:checked="true"
+            android:id="@+id/no_suffix_num_check_box"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/transpose_num"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:checked="true"
+            android:id="@+id/no_transpose_num_check_box"/>
+
+
 
         <Button
             android:id="@+id/button"

@@ -9,6 +9,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ public class EditingActivity extends AppCompatActivity {
 
     TextView seekBarValueTextView;
 
+    CheckBox noSuffixToNumCheckBox, noTransposeNumCheckBox;
+
 
     String endPhrase;
     String endPhraseBeginning;
@@ -41,12 +45,9 @@ public class EditingActivity extends AppCompatActivity {
     String completedSentence;
     String originalWord;
     String endPunctuation;
-    boolean addPunctuation;
     static String endPhraseStatic;
 
     Toast toast;
-
-    long indexOfUpper;
     int seekBarValue;
 
     @Override
@@ -60,9 +61,29 @@ public class EditingActivity extends AppCompatActivity {
         lettersCutSeekBar = (SeekBar) findViewById(R.id.letters_cut_seek_bar);
         seekBarValueTextView = (TextView) findViewById(R.id.seek_bar_value);
 
+        noTransposeNumCheckBox = (CheckBox) findViewById(R.id.no_suffix_num_check_box);
+        noSuffixToNumCheckBox = (CheckBox) findViewById(R.id.no_transpose_num_check_box);
+
+
+
         // First, set seek bar value to 1
         lettersCutSeekBar.setProgress(0);
         // Then, set the onSeekBarChangeListener
+
+        noTransposeNumCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                translatePreview(seekBarValue);
+            }
+        });
+
+        noSuffixToNumCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                translatePreview(seekBarValue);
+            }
+        });
+
         lettersCutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -122,32 +143,83 @@ public class EditingActivity extends AppCompatActivity {
     }
 
     public void translatePreview(int seekBarValueInt) {
-        endPhrase = endPhraseEditText.getText().toString();
-        userInputPreview = getResources().getString(R.string.preview);
+        try {
+            endPhrase = endPhraseEditText.getText().toString();
+            userInputPreview = getResources().getString(R.string.preview);
+
+            endPunctuation = "";
 
 
+            userInputPreviewLower = userInputPreview.toLowerCase();
 
+            String[] wordList = userInputPreview.split("[ ]");
 
-        userInputPreviewLower = userInputPreview.toLowerCase();
-
-        String[] wordList = userInputPreview.split("[ ]");
-
-        ArrayList<String> translatedList = new ArrayList<>();
-        translatedList.clear();
+            ArrayList<String> translatedList = new ArrayList<>();
+            translatedList.clear();
 //        Log.d("Andres", endPhrase);
 //        Log.d("Andres", seekBarValueInt + "");
 
-        for (String word : wordList) {
-            originalWord = word;
-            completedSentence = "";
+            for (String word : wordList) {
+                originalWord = word;
+                completedSentence = "";
+//            String test = "done.";
 
-            if (word.contains("[.]")) {
-                Snackbar.make(findViewById(R.id.seek_bar_value), "" + originalWord, Snackbar.LENGTH_SHORT).show();
-                endPunctuation = originalWord.substring(originalWord.indexOf("[.,?!;:]"));
-            }
 
-            //split by letter
-            String[] num = identifyUppercase(originalWord).split("(?!^)");
+                if (word.contains(".") || word.contains(",") || word.contains("?") || word.contains("!") || word.contains(":") || word.contains(";")) {
+                    try {
+                        endPunctuation = originalWord.substring(originalWord.indexOf("."));
+                        word = word.replace(".", "");
+                    } catch (Exception e) {
+                        try {
+                            endPunctuation = originalWord.substring(originalWord.indexOf(","));
+                            word = word.replace(",", "");
+                        } catch (Exception e2) {
+                            try {
+                                endPunctuation = originalWord.substring(originalWord.indexOf("?"));
+                                word = word.replace("?", "");
+                            } catch (Exception e3) {
+                                try {
+                                    endPunctuation = originalWord.substring(originalWord.indexOf("!"));
+                                    word = word.replace("!", "");
+                                } catch (Exception e4) {
+                                    try {
+                                        endPunctuation = originalWord.substring(originalWord.indexOf(":"));
+                                        word = word.replace(":", "");
+                                    } catch (Exception e5) {
+                                        try {
+                                            endPunctuation = originalWord.substring(originalWord.indexOf(";"));
+                                            word = word.replace(";", "");
+                                        } catch (Exception e6) {
+                                            endPunctuation = "";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    endPunctuation = "";
+                }
+
+                if (noSuffixToNumCheckBox.isChecked()) {
+                    Snackbar.make(findViewById(R.id.editingModeTextView), "Ok", Snackbar.LENGTH_LONG).show();
+                    if (word.matches("[0-9]+")) {
+                        endPhrase = "";
+//                        Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        endPhrase = endPhraseEditText.getText().toString();
+                    }
+                }
+//                if (noTransposeNumCheckBox.isChecked()) {
+//                    seekBarValueInt = 0;
+//                }
+//                else if (!noTransposeNumCheckBox.isChecked()) {
+//                    continue;
+//                }
+
+                //split by letter
+                String[] num = identifyUppercase(originalWord).split("(?!^)");
 //            String[] num = identifyUppercase(originalWord).toCharArray();
 
 //            Ends with non letter
@@ -161,99 +233,117 @@ public class EditingActivity extends AppCompatActivity {
 //            }
 
 
-            if (seekBarValueInt != 0) {
-                word = word.toLowerCase();
-                try {
-                    if (seekBarValueInt == word.length()) {
-                        //this line causes stringIndexOutOfBoundsException
-                        String exceptionString = "6chars";
-                        exceptionString.substring(0, exceptionString.length() + 25);
+                if (seekBarValueInt != 0) {
+                    word = word.toLowerCase();
+                    try {
+                        if (seekBarValueInt == word.length()) {
+                            //this line causes stringIndexOutOfBoundsException
+                            String exceptionString = "6chars";
+                            exceptionString.substring(0, exceptionString.length() + 25);
+                        } else {
+                            endPhraseBeginning = word.substring(0, seekBarValueInt);
+                        }
+
+                    } catch (StringIndexOutOfBoundsException s) {
+
+                        endPhraseBeginning = word.substring(0, word.length() - 1);
                     }
-                    else {
-                        endPhraseBeginning = word.substring(0, seekBarValueInt);
+                    try {
+                        if (seekBarValueInt == word.length()) {
+                            //this line causes stringIndexOutOfBoundsException
+                            String exceptionString = "6chars";
+                            exceptionString.substring(0, exceptionString.length() + 25);
+                        } else {
+                            startingPhrase = word.substring(seekBarValueInt, word.length());
+                        }
+                    } catch (StringIndexOutOfBoundsException s2) {
+                        startingPhrase = word.substring(word.length() - 1, word.length());
                     }
 
-                } catch (StringIndexOutOfBoundsException s) {
+                    cutWord = startingPhrase + endPhraseBeginning;
 
-                    endPhraseBeginning = word.substring(0, word.length() - 1);
-                }
-                try {
-                    if (seekBarValueInt == word.length()) {
-                        //this line causes stringIndexOutOfBoundsException
-                        String exceptionString = "6chars";
-                        exceptionString.substring(0, exceptionString.length() + 25);
-                    }
-                    else {
-                        startingPhrase = word.substring(seekBarValueInt, word.length());
-                    }
-                } catch (StringIndexOutOfBoundsException s2) {
-                    startingPhrase = word.substring(word.length() - 1, word.length());
-                }
+                    cutWordSub = cutWord;
+                    for (int i = 0; i < cutWord.length(); i++) {
 
-                cutWord = startingPhrase + endPhraseBeginning;
+                        for (String n : num) {
 
-                cutWordSub = cutWord;
-                for (int i = 0; i < cutWord.length(); i++) {
+                            try {
 
-                    for (String n : num) {
+                                if (i == Long.parseLong(n)) {
 
-                        try {
+                                    try {
+                                        String character = cutWordSub.charAt((int) Long.parseLong(n)) + "";
+                                        cutWordSub = cutWordSub.substring(0, (int) Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int) Long.parseLong(n) + 1);
+                                    } catch (StringIndexOutOfBoundsException s) {
 
-                            if (i == Long.parseLong(n)) {
-
-                                try {
-                                    String character = cutWordSub.charAt((int) Long.parseLong(n)) + "";
-                                    cutWordSub = cutWordSub.substring(0, (int) Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int) Long.parseLong(n) + 1);
-                                } catch (StringIndexOutOfBoundsException s) {
-
+                                    }
                                 }
-                            }
-                        } catch (NumberFormatException NFE) {
+                            } catch (NumberFormatException NFE) {
 //
+                            }
                         }
                     }
-                }
 
 
-
-                cutWord = cutWordSub;
+                    cutWord = cutWordSub;
 //
-                int numOfCaps = 0;
-                for (int i = 0; i < cutWord.length(); i++) {
-                    if (isUpperCase(cutWord.charAt(i) + "")) {
-                        numOfCaps += 1;
+
+                    int numOfCaps = 0;
+                    for (int i = 0; i < cutWord.length(); i++) {
+                        if (isUpperCase(cutWord.charAt(i) + "")) {
+                            numOfCaps += 1;
+                        }
                     }
-                }
-                if (numOfCaps > 1) {
-                    translatedList.add(cutWord + endPhrase.toUpperCase());
+                    if (numOfCaps > 1) {
 
-                } else {
-                    translatedList.add(cutWord + endPhrase);
-                }
-            } else {
-                int numOfCaps = 0;
-                for (int i = 0; i < word.length(); i++) {
-                    if (isUpperCase(word.charAt(i) + "")) {
-                        numOfCaps += 1;
+                        translatedList.add(cutWord + endPhrase.toUpperCase() + endPunctuation);
+
+
+                    } else {
+                        translatedList.add(cutWord + endPhrase + endPunctuation);
                     }
-                }
-                if (numOfCaps > 1) {
-                    translatedList.add(word + endPhrase.toUpperCase());
                 } else {
-                    translatedList.add(word + endPhrase);
+                    int numOfCaps = 0;
+                    for (int i = 0; i < word.length(); i++) {
+                        if (isUpperCase(word.charAt(i) + "")) {
+                            numOfCaps += 1;
+                        }
+                    }
+                    if (numOfCaps > 1) {
+                        translatedList.add(word + endPhrase.toUpperCase() + endPunctuation);
+                    } else {
+                        translatedList.add(word + endPhrase + endPunctuation);
+                    }
+
                 }
 
-            }
-
-            for (String words : translatedList) {
-                completedSentence += words + " ";
-            }
+                for (String words : translatedList) {
+                    completedSentence += words + " ";
+                }
 //            completedSentence = addSpaceForEveryWord(completedSentence, translatedList);
 
+            }
+
+
+            previewTextView.setText(completedSentence);
+        } catch (final Exception e) {
+            //This won't allow app to crash
+            Snackbar.make(findViewById(R.id.editingModeTextView), "Error: " + e, Snackbar.LENGTH_INDEFINITE).setAction("Report", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+                    emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "an3developer@gmail.com");
+
+                    emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "CodeMaker Error");
+
+                    emailIntent.setType("plain/text");
+                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Error: " + e);
+
+                    startActivity(emailIntent);
+                }
+            });
         }
-
-
-        previewTextView.setText(completedSentence);
     }
 
     public String identifyUppercase(String word) {

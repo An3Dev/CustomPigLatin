@@ -29,7 +29,7 @@
     <string name="edit_mode_title">Editing Mode</string>
     <string name="editing_mode_switch">Editing Mode On</string>
     <string name="editing_mode_switch_off">Editing Mode Off</string>
-    <string name="preview">This is a preview sentence.</string>
+    <string name="preview">This is a preview sentence. Now there are 2.</string>
     <string name="your_words">Your words</string>
     <string name="addedWordHint">Put a word you want in your code here.</string>
     <string name="paste">Paste</string>
@@ -40,4 +40,6 @@
     <string name="leave_pig_latin_translator">Exit PigLatin Translator?</string>
     <string name="are_you_sure_want_to_leave">Are you sure you want to exit PigLatin Translator?</string>
     <string name="done">Done</string>
+    <string name="add_suffix_num">Do not add suffix to number</string>
+    <string name="transpose_num">Do not transpose numbers</string>
 </resources>
