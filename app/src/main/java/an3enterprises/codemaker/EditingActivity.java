@@ -2,6 +2,7 @@ package an3enterprises.codemaker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,15 @@ public class EditingActivity extends AppCompatActivity {
 
     CheckBox noSuffixToNumCheckBox, noTransposeNumCheckBox;
 
+    static String endingSuffixSharedPreferenceName = "endingSuffix";
+
+    static String lettersTransposedSharedPreferenceName = "lettersTransposed";
+
+    static String suffixToNumPreferenceName = "suffixToNum";
+
+    static String transposeNumPreferenceName = "transposeNum";
+
+
 
     String endPhrase;
     String endPhraseBeginning;
@@ -61,14 +71,40 @@ public class EditingActivity extends AppCompatActivity {
         lettersCutSeekBar = (SeekBar) findViewById(R.id.letters_cut_seek_bar);
         seekBarValueTextView = (TextView) findViewById(R.id.seek_bar_value);
 
-        noTransposeNumCheckBox = (CheckBox) findViewById(R.id.no_suffix_num_check_box);
-        noSuffixToNumCheckBox = (CheckBox) findViewById(R.id.no_transpose_num_check_box);
+        noSuffixToNumCheckBox = (CheckBox) findViewById(R.id.no_suffix_num_check_box);
+        noTransposeNumCheckBox = (CheckBox) findViewById(R.id.no_transpose_num_check_box);
 
 
 
         // First, set seek bar value to 1
         lettersCutSeekBar.setProgress(0);
         // Then, set the onSeekBarChangeListener
+
+        // Get the SharedPreference settings
+//        try {
+            SharedPreferences endingSuffix = getSharedPreferences(endingSuffixSharedPreferenceName, Context.MODE_PRIVATE);
+            endPhraseEditText.setText(endingSuffix.getString(endingSuffixSharedPreferenceName, ""));
+
+            SharedPreferences lettersTransposedPreference = getSharedPreferences(lettersTransposedSharedPreferenceName, Context.MODE_PRIVATE);
+            int num = lettersTransposedPreference.getInt(lettersTransposedSharedPreferenceName, 0);
+            lettersCutSeekBar.setProgress(num);
+
+            SharedPreferences suffixToNum = getSharedPreferences(suffixToNumPreferenceName, Context.MODE_PRIVATE);
+            noSuffixToNumCheckBox.setChecked(Boolean.valueOf(suffixToNum.getString(suffixToNumPreferenceName, "true")));
+
+            SharedPreferences transposeNum = getSharedPreferences(transposeNumPreferenceName, Context.MODE_PRIVATE);
+            noTransposeNumCheckBox.setChecked(Boolean.valueOf(transposeNum.getString(transposeNumPreferenceName, "true")));
+
+            seekBarValueTextView.setText(lettersCutSeekBar.getProgress() + "");
+
+//        }
+//        catch(Exception e) {
+//            Toast.makeText(this, "Could not load data: " + e, Toast.LENGTH_SHORT).show();
+//            Log.e("EditingActivity", e + "");
+//        }
+
+        translatePreview(lettersCutSeekBar.getProgress());
+
 
         noTransposeNumCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -83,7 +119,6 @@ public class EditingActivity extends AppCompatActivity {
                 translatePreview(seekBarValue);
             }
         });
-
         lettersCutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -137,9 +172,32 @@ public class EditingActivity extends AppCompatActivity {
     }
 
     public void goToCodeMakingActivity(View view) {
+        saveValues();
         Intent intent = new Intent(EditingActivity.this, CodeMakingActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    public void saveValues() {
+        SharedPreferences endingSuffixPreference = getSharedPreferences(endingSuffixSharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor endingSuffixPreferenceEditor = endingSuffixPreference.edit();
+        endingSuffixPreferenceEditor.putString(endingSuffixSharedPreferenceName, endPhraseEditText.getText().toString());
+        endingSuffixPreferenceEditor.commit();
+
+        SharedPreferences lettersTransposedPreference = getSharedPreferences(lettersTransposedSharedPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor lettersTransposedEditor = lettersTransposedPreference.edit();
+        lettersTransposedEditor.putInt(lettersTransposedSharedPreferenceName, lettersCutSeekBar.getProgress());
+        lettersTransposedEditor.commit();
+
+        SharedPreferences suffixToNum = getSharedPreferences(suffixToNumPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor suffixToNumEditor = suffixToNum.edit();
+        suffixToNumEditor.putString(suffixToNumPreferenceName, noSuffixToNumCheckBox.isChecked() + "");
+        suffixToNumEditor.commit();
+
+        SharedPreferences transposeNum = getSharedPreferences(transposeNumPreferenceName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor transposeNumEditor = transposeNum.edit();
+        transposeNumEditor.putString(transposeNumPreferenceName, noTransposeNumCheckBox.isChecked() + "");
+        transposeNumEditor.commit();
     }
 
     public void translatePreview(int seekBarValueInt) {
@@ -202,7 +260,6 @@ public class EditingActivity extends AppCompatActivity {
                 }
 
                 if (noSuffixToNumCheckBox.isChecked()) {
-                    Snackbar.make(findViewById(R.id.editingModeTextView), "Ok", Snackbar.LENGTH_LONG).show();
                     if (word.matches("[0-9]+")) {
                         endPhrase = "";
 //                        Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
@@ -210,27 +267,25 @@ public class EditingActivity extends AppCompatActivity {
                     else {
                         endPhrase = endPhraseEditText.getText().toString();
                     }
+                } else {
+                    endPhrase = endPhraseEditText.getText().toString();
                 }
-//                if (noTransposeNumCheckBox.isChecked()) {
-//                    seekBarValueInt = 0;
-//                }
-//                else if (!noTransposeNumCheckBox.isChecked()) {
-//                    continue;
-//                }
+
+                if (noTransposeNumCheckBox.isChecked()) {
+                    if (word.matches("[0-9]+")) {
+                        seekBarValueInt = 0;
+//                        Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        seekBarValueInt = lettersCutSeekBar.getProgress();
+                    }
+                } else {
+                    seekBarValueInt = lettersCutSeekBar.getProgress();
+                }
+
 
                 //split by letter
                 String[] num = identifyUppercase(originalWord).split("(?!^)");
-//            String[] num = identifyUppercase(originalWord).toCharArray();
-
-//            Ends with non letter
-//            if (!originalWord.toLowerCase().substring(originalWord.length() - 1, originalWord.length()).equals("[abcdefghijklmnopqrstuvwxyzáéíóúàèìòùäëïöüāēīōū]")) {
-//                endPunctuation = originalWord.toLowerCase().substring(originalWord.length() - 1, originalWord.length());
-//                addPunctuation = true;
-//            }
-//            else {
-//                endPunctuation = null;
-//                addPunctuation = false;
-//            }
 
 
                 if (seekBarValueInt != 0) {
@@ -409,5 +464,27 @@ public class EditingActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        saveValues();
+        super.onPause();
+    }
 
+    @Override
+    protected void onDestroy() {
+        saveValues();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        saveValues();
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        saveValues();
+        super.onBackPressed();
+    }
 }

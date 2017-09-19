@@ -29,7 +29,7 @@
     <string name="edit_mode_title">Editing Mode</string>
     <string name="editing_mode_switch">Editing Mode On</string>
     <string name="editing_mode_switch_off">Editing Mode Off</string>
-    <string name="preview">This is a preview sentence. Now there are 2.</string>
+    <string name="preview">There is 1 preview sentence. Now there are 2 sentences.</string>
     <string name="your_words">Your words</string>
     <string name="addedWordHint">Put a word you want in your code here.</string>
     <string name="paste">Paste</string>
