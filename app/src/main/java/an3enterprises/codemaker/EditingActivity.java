@@ -173,7 +173,7 @@ public class EditingActivity extends AppCompatActivity {
 
     public void goToCodeMakingActivity(View view) {
         saveValues();
-        Intent intent = new Intent(EditingActivity.this, CodeMakingActivity.class);
+        Intent intent = new Intent(EditingActivity.this, TranslatorActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
     }

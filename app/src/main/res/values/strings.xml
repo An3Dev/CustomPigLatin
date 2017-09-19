@@ -40,6 +40,6 @@
     <string name="leave_pig_latin_translator">Exit PigLatin Translator?</string>
     <string name="are_you_sure_want_to_leave">Are you sure you want to exit PigLatin Translator?</string>
     <string name="done">Done</string>
-    <string name="add_suffix_num">Do not add suffix to number</string>
+    <string name="add_suffix_num">Do not add suffix to numbers</string>
     <string name="transpose_num">Do not transpose numbers</string>
 </resources>

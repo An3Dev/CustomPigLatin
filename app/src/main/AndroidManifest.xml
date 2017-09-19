@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CodeMakingActivity"
+        <activity android:name=".TranslatorActivity"
             android:label="@string/use_translator"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 

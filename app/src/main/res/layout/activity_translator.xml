@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true">
 
             <EditText
-                android:id="@+id/nonPygLatin"
+                android:id="@+id/input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -31,7 +31,7 @@
                 android:layout_marginRight="16dp" />
 
             <TextView
-                android:id="@+id/pygLatinWord"
+                android:id="@+id/output"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
@@ -60,8 +60,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/copy"
                     android:onClick="copyTranslation"
-                    android:layout_gravity="center"
-                    android:enabled="false"/>
+                    android:layout_gravity="center" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -70,8 +69,7 @@
                     android:onClick="onShareClicked"
                     android:layout_gravity="center"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:enabled="false"/>
+                    android:layout_marginRight="16dp" />
 
                 <Button
                     android:layout_width="wrap_content"
@@ -80,7 +78,8 @@
                     android:onClick="goToDetranslator"
                     android:layout_gravity="center"
                     android:layout_marginRight="16dp"
-                    android:id="@+id/useDetranslator" />
+                    android:id="@+id/useDetranslator"
+                    android:enabled="false"/>
 
             </LinearLayout>
 
