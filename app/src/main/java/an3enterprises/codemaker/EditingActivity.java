@@ -8,7 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -171,6 +174,20 @@ public class EditingActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.info_and_tips_menu) {
+            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void goToCodeMakingActivity(View view) {
         saveValues();
         Intent intent = new Intent(EditingActivity.this, TranslatorActivity.class);
@@ -329,6 +346,7 @@ public class EditingActivity extends AppCompatActivity {
                                     try {
                                         String character = cutWordSub.charAt((int) Long.parseLong(n)) + "";
                                         cutWordSub = cutWordSub.substring(0, (int) Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int) Long.parseLong(n) + 1);
+                                        Log.d("Andres", cutWordSub);
                                     } catch (StringIndexOutOfBoundsException s) {
 
                                     }
@@ -338,6 +356,8 @@ public class EditingActivity extends AppCompatActivity {
                             }
                         }
                     }
+
+
 
 
                     cutWord = cutWordSub;

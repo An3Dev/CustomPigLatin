@@ -62,7 +62,8 @@ public class TranslatorActivity extends AppCompatActivity {
         endPhrase = endingSuffix.getString(endingSuffixSharedPreferenceName, "");
 
         SharedPreferences lettersTransposedPreference = getSharedPreferences(lettersTransposedSharedPreferenceName, Context.MODE_PRIVATE);
-        transposedValue = lettersTransposedPreference.getInt(lettersTransposedSharedPreferenceName, 0);
+        int num = lettersTransposedPreference.getInt(lettersTransposedSharedPreferenceName, 0);
+        transposedValue = num;
 
         SharedPreferences suffixToNum = getSharedPreferences(suffixToNumPreferenceName, Context.MODE_PRIVATE);
         noSuffixToNum = Boolean.valueOf(suffixToNum.getString(suffixToNumPreferenceName, "true"));
@@ -103,7 +104,7 @@ public class TranslatorActivity extends AppCompatActivity {
     }
 
     public void goToDetranslator(View view) {
-        Intent intent = new Intent(TranslatorActivity.this, CodeDetranslator.class);
+        Intent intent = new Intent(TranslatorActivity.this, DetranslatorActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
@@ -117,7 +118,7 @@ public class TranslatorActivity extends AppCompatActivity {
 
             inputStringLower = inputString.toLowerCase();
 
-            String[] wordList = inputStringLower.split("[ ]");
+            String[] wordList = inputString.split("[ ]");
 
             ArrayList<String> translatedList = new ArrayList<>();
             translatedList.clear();
@@ -125,6 +126,7 @@ public class TranslatorActivity extends AppCompatActivity {
 //        Log.d("Andres", seekBarValueInt + "");
 
             for (String word : wordList) {
+
                 originalWord = word;
                 completedSentence = "";
 //            String test = "done.";
@@ -182,6 +184,7 @@ public class TranslatorActivity extends AppCompatActivity {
                 }
 
 
+
                 //split by letter
                 String[] num = identifyUppercase(originalWord).split("(?!^)");
 
@@ -219,7 +222,6 @@ public class TranslatorActivity extends AppCompatActivity {
                     for (int i = 0; i < cutWord.length(); i++) {
 
                         for (String n : num) {
-
                             try {
 
                                 if (i == Long.parseLong(n)) {
@@ -240,7 +242,7 @@ public class TranslatorActivity extends AppCompatActivity {
 
                     cutWord = cutWordSub;
 //
-
+                    
                     int numOfCaps = 0;
                     for (int i = 0; i < cutWord.length(); i++) {
                         if (isUpperCase(cutWord.charAt(i) + "")) {
@@ -248,7 +250,7 @@ public class TranslatorActivity extends AppCompatActivity {
                         }
                     }
                     if (numOfCaps > 1) {
-
+//                        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                         translatedList.add(cutWord + endPhrase.toUpperCase() + endPunctuation);
 
 

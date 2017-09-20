@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="an3enterprises.codemaker.DetranslatorActivity">
+    tools:context="an3enterprises.codemaker.InfoAndTips">
 
 </android.support.constraint.ConstraintLayout>
