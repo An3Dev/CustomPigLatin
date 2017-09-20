@@ -3,8 +3,8 @@
     <string name="editing_mode">Editing Mode</string>
     <string name="code_maker_label">Code Maker</string>
     <string name="end_phrase">Ending Suffix</string>
-    <string name="example_ay">Example: ay</string>
-    <string name="starting_cut">Number of Letters Transposed</string>
+    <string name="example_ay">Enter a suffix; like \"ay\"</string>
+    <string name="starting_cut">Number of Letters Moved to End</string>
     <string name="word_in_pyg_latin_hint">"Word in PygLatin"</string>
     <string name="word_in_other_language">"Translation"</string>
     <string name="your_words_in_pyglatin">Enter word or phrase</string>
