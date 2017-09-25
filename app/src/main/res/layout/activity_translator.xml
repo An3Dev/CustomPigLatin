@@ -74,12 +74,46 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/speak"
+                    android:onClick="speakWords"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textAllCaps="true"
+                    android:text="@string/go_to_edit_mode"
+                    android:background="#000"
+                    android:textColor="#FFF"
+                    android:onClick="goToEditMode"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/use_detranslator"
                     android:onClick="goToDetranslator"
                     android:layout_gravity="center"
                     android:layout_marginRight="16dp"
                     android:id="@+id/useDetranslator"
-                    android:enabled="false"/>
+                    android:enabled="true"
+                    android:layout_weight="1"
+                    android:background="#000"
+                    android:textColor="#FFF"/>
+
 
             </LinearLayout>
 

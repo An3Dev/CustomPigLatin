@@ -24,8 +24,12 @@
         <activity
             android:name=".DetranslatorActivity"
             android:label="@string/use_detranslator"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
-        <activity android:name=".InfoAndTips"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan">
+
+        </activity>
+        <activity android:name=".InfoAndTips">
+
+        </activity>
     </application>
 
 </manifest>

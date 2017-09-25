@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Code Maker</string>
-    <string name="editing_mode">Editing Mode</string>
+    <string name="app_name">Spy Code Maker</string>
+    <string name="editing_mode">Edit Mode</string>
     <string name="code_maker_label">Code Maker</string>
     <string name="end_phrase">Ending Suffix</string>
     <string name="example_ay">Enter a suffix; like \"ay\"</string>
@@ -39,8 +39,15 @@
     <string name="ok">Okay</string>
     <string name="leave_pig_latin_translator">Exit PigLatin Translator?</string>
     <string name="are_you_sure_want_to_leave">Are you sure you want to exit PigLatin Translator?</string>
-    <string name="done">Done</string>
+    <string name="done">Save And Start Translating</string>
     <string name="add_suffix_num">Do not add suffix to numbers</string>
     <string name="transpose_num">Do not transpose numbers</string>
     <string name="more_info">Info / Tips</string>
+    <string name="please_no_special_symbols">Please do not use any special symbols other than punctuation.</string>
+    <string name="detranslation">Detranslation</string>
+    <string name="go_to_edit_mode">Go To Edit Mode</string>
+    <string name="cant_load_string">Oops&#8230; Your previous text could not be loaded.</string>
+    <string name="speak">Speak</string>
+    <string name="extras">Extras</string>
+    <string name="save_share_friends">Share With Friends</string>
 </resources>

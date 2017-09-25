@@ -8,11 +8,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -38,13 +38,13 @@ public class EditingActivity extends AppCompatActivity {
 
     CheckBox noSuffixToNumCheckBox, noTransposeNumCheckBox;
 
-    static String endingSuffixSharedPreferenceName = "endingSuffix";
+    final static String endingSuffixSharedPreferenceName = "endingSuffix";
 
-    static String lettersTransposedSharedPreferenceName = "lettersTransposed";
+    final static String lettersTransposedSharedPreferenceName = "lettersTransposed";
 
-    static String suffixToNumPreferenceName = "suffixToNum";
+    final static String suffixToNumPreferenceName = "suffixToNum";
 
-    static String transposeNumPreferenceName = "transposeNum";
+    final static String transposeNumPreferenceName = "transposeNum";
 
 
 
@@ -122,6 +122,13 @@ public class EditingActivity extends AppCompatActivity {
                 translatePreview(seekBarValue);
             }
         });
+
+        endPhraseEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endPhraseEditText.setCursorVisible(true);
+            }
+        });
         lettersCutSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -129,6 +136,9 @@ public class EditingActivity extends AppCompatActivity {
 
                 seekBarValueTextView.setText(i + "");
                 seekBarValue = i;
+                endPhraseEditText.clearFocus();
+                saveValues();
+                hideKeyboardAndCursor(endPhraseEditText);
                 translatePreview(seekBarValue);
 
             }
@@ -136,12 +146,14 @@ public class EditingActivity extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 seekBarValue = seekBar.getProgress();
+                hideKeyboardAndCursor(endPhraseEditText);
                 translatePreview(seekBarValue);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 seekBarValue = seekBar.getProgress();
+                hideKeyboardAndCursor(endPhraseEditText);
                 translatePreview(seekBarValue);
             }
         });
@@ -192,7 +204,6 @@ public class EditingActivity extends AppCompatActivity {
         saveValues();
         Intent intent = new Intent(EditingActivity.this, TranslatorActivity.class);
         startActivity(intent);
-        overridePendingTransition(0, 0);
     }
 
     public void saveValues() {
@@ -346,7 +357,6 @@ public class EditingActivity extends AppCompatActivity {
                                     try {
                                         String character = cutWordSub.charAt((int) Long.parseLong(n)) + "";
                                         cutWordSub = cutWordSub.substring(0, (int) Long.parseLong(n)) + character.toUpperCase() + cutWordSub.substring((int) Long.parseLong(n) + 1);
-                                        Log.d("Andres", cutWordSub);
                                     } catch (StringIndexOutOfBoundsException s) {
 
                                     }
@@ -401,14 +411,19 @@ public class EditingActivity extends AppCompatActivity {
 
 
             previewTextView.setText(completedSentence);
+
         } catch (final Exception e) {
             //This won't allow app to crash
-            Snackbar.make(findViewById(R.id.editingModeTextView), "Error: " + e, Snackbar.LENGTH_INDEFINITE).setAction("Report", new View.OnClickListener() {
+            if (this.getCurrentFocus() != null) {
+                InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            Snackbar.make(findViewById(R.id.editingModeTextView), "Oops! There's an error. Please report to the dev.", Snackbar.LENGTH_INDEFINITE).setAction("Report", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
 
-                    emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "an3developer@gmail.com");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {"an3developer@gmail.com"});
 
                     emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "CodeMaker Error");
 
@@ -417,7 +432,7 @@ public class EditingActivity extends AppCompatActivity {
 
                     startActivity(emailIntent);
                 }
-            });
+            }).show();
         }
     }
 
@@ -505,6 +520,12 @@ public class EditingActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         saveValues();
-        super.onBackPressed();
+//        super.onBackPressed();
+    }
+
+    public void hideKeyboardAndCursor(EditText editText) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        editText.setCursorVisible(false);
     }
 }
