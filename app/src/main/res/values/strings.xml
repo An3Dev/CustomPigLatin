@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spy Code Maker</string>
+    <string name="app_name">Code Maker</string>
     <string name="editing_mode">Edit Mode</string>
     <string name="code_maker_label">Code Maker</string>
     <string name="end_phrase">Ending Suffix</string>
@@ -21,8 +21,8 @@
     <string name="share_using">Share using&#8230;</string>
     <string name="pig">Pig</string>
     <string name="man">Man</string>
-    <string name="use_detranslator">Detranslator</string>
-    <string name="use_translator">Translator</string>
+    <string name="use_detranslator">Decoder</string>
+    <string name="use_translator">Encoder</string>
     <string name="share_app">Share PigLatin Translator</string>
     <string name="get_pig_latin_translator_share">Hey! You should get PigLatin Translator by An3Enterprises.</string>
     <string name="make_own_language">Make your own language</string>
@@ -49,5 +49,15 @@
     <string name="cant_load_string">Oops&#8230; Your previous text could not be loaded.</string>
     <string name="speak">Speak</string>
     <string name="extras">Extras</string>
-    <string name="save_share_friends">Share With Friends</string>
+    <string name="save_share_friends">Share Your Code\nWith Friends</string>
+    <string name="invitation">"Hey! Install this app called Code Maker.
+        Link to Google Play Store: https://play.google.com/store/apps/details?id=an3enterprises.codemaker.
+        Then enter the following code into a text box in the Enter Shared Code section: "</string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=an3enterprises.codemaker</string>
+    <string name="enter_code">Enter Shared Code</string>
+    <string name="done_alert_dialog">Done</string>
+    <string name="shared_code_hint">Please enter code precisely</string>
+    <string name="invalid_shared_code">Your shared code is invalid. Please double check you\'re typing it right.</string>
+    <string name="shared_code_loaded">Your new code was loaded!</string>
+    <string name="shared_code_message">Enter the code your friend sent you. When you enter the code, you\'ll be able to decode his messages!</string>
 </resources>

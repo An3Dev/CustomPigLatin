@@ -1,10 +1,13 @@
 package an3enterprises.codemaker;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,6 +49,8 @@ public class EditingActivity extends AppCompatActivity {
 
     final static String transposeNumPreferenceName = "transposeNum";
 
+    static String sharedCodeSeparator = ".";
+
 
 
     String endPhrase;
@@ -76,8 +81,6 @@ public class EditingActivity extends AppCompatActivity {
 
         noSuffixToNumCheckBox = (CheckBox) findViewById(R.id.no_suffix_num_check_box);
         noTransposeNumCheckBox = (CheckBox) findViewById(R.id.no_transpose_num_check_box);
-
-
 
         // First, set seek bar value to 1
         lettersCutSeekBar.setProgress(0);
@@ -188,16 +191,96 @@ public class EditingActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_editing, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.info_and_tips_menu) {
-            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
-            startActivity(intent);
+//        if (item.getItemId() == R.id.info_and_tips_menu) {
+//            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+//            startActivity(intent);
+//        }
+
+        if (item.getItemId() == R.id.enter_shared_code_menu) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(EditingActivity.this);
+            builder.setTitle(getResources().getString(R.string.enter_code));
+            builder.setMessage(getResources().getString(R.string.shared_code_message));
+            final EditText codeET = new EditText(EditingActivity.this);
+            codeET.setHint(getResources().getString(R.string.shared_code_hint));
+            builder.setView(codeET);
+            builder.setPositiveButton(getResources().getString(R.string.done_alert_dialog), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    loadCode(codeET.getText().toString());
+                    closeKeyboard(codeET);
+                }
+            });
+            builder.setNeutralButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    closeKeyboard(codeET);
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadCode(String sharedCode) {
+
+//        String[] list = sharedCode.split("[.]");
+//        for (String s : list) {
+//            Toast.makeText(this, "" + s, Toast.LENGTH_SHORT).show();
+//        }
+
+
+        String[] itemList = sharedCode.split("[.]");
+        int num = 1;
+            for (String item : itemList) {
+                try {
+                    if (num == 1) {
+                        if (item.matches("0")) {
+                            endPhraseEditText.setText("");
+                        }
+                        else {
+                            endPhraseEditText.setText(item);
+                        }
+                    }
+                    if (num == 2) {
+                        if (Integer.valueOf(item) <= 3) {
+                            lettersCutSeekBar.setProgress(Integer.valueOf(item));
+                        } else {
+                            throw new RuntimeException("Invalid");
+                        }
+
+                    }
+                    if (num == 3) {
+                        if (Integer.valueOf(item) == 0) {
+                            noSuffixToNumCheckBox.setChecked(false);
+                        }
+                        if (Integer.valueOf(item) == 1) {
+                            noSuffixToNumCheckBox.setChecked(true);
+                        }
+                    }
+                    if (num == 4) {
+                        if (Integer.valueOf(item) == 0) {
+                            noTransposeNumCheckBox.setChecked(false);
+                        }
+                        if (Integer.valueOf(item) == 1) {
+                            noTransposeNumCheckBox.setChecked(true);
+                        }
+                    }
+                    num += 1;
+                } catch (Exception e) {
+                    Toast.makeText(this, getResources().getString(R.string.invalid_shared_code), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        Snackbar.make(findViewById(R.id.editingModeTextView), getResources().getString(R.string.shared_code_loaded), Snackbar.LENGTH_LONG).show();
+        saveValues();
     }
 
     public void goToCodeMakingActivity(View view) {
@@ -527,5 +610,42 @@ public class EditingActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         editText.setCursorVisible(false);
+    }
+
+    public void closeKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
+    public void shareCodeFriends(View view) {
+
+        int isTransposed = 0;
+        int isSuffixToNum = 0;
+        String endPhrasePart = endPhrase;
+        if (noTransposeNumCheckBox.isChecked()) {
+            isTransposed = 1;
+        }
+        else {
+            isTransposed = 0;
+        }
+        if (noSuffixToNumCheckBox.isChecked()) {
+            isSuffixToNum = 1;
+        }
+        else {
+            isSuffixToNum = 0;
+        }
+        if (endPhrase.isEmpty()) {
+            endPhrasePart = "0";
+        }
+
+        String shareBody = getResources().getString(R.string.invitation) + endPhrasePart + sharedCodeSeparator + lettersCutSeekBar.getProgress() + sharedCodeSeparator + isSuffixToNum + sharedCodeSeparator + isTransposed;
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, R.string.app_name);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+        if (Build.VERSION.SDK_INT >= 21)
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
+
     }
 }
