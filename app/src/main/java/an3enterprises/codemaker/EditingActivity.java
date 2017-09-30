@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -73,6 +74,24 @@ public class EditingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editing);
 
+//        Do this only at startup
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.getBoolean("firstTime", false)) {
+            // <---- run your one time code here
+
+            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+            startActivity(intent);
+
+
+
+//             mark first time has run.
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("firstTime", true);
+            editor.commit();
+        }
+
+
+
         endPhraseEditText = (EditText) findViewById(R.id.end_phrase_edit_text);
         editingModeTextView = (TextView) findViewById(R.id.editingModeTextView);
         previewTextView = (TextView) findViewById(R.id.preview_text_view);
@@ -81,6 +100,8 @@ public class EditingActivity extends AppCompatActivity {
 
         noSuffixToNumCheckBox = (CheckBox) findViewById(R.id.no_suffix_num_check_box);
         noTransposeNumCheckBox = (CheckBox) findViewById(R.id.no_transpose_num_check_box);
+
+        hideKeyboardAndCursor(endPhraseEditText);
 
         // First, set seek bar value to 1
         lettersCutSeekBar.setProgress(0);
@@ -109,7 +130,9 @@ public class EditingActivity extends AppCompatActivity {
 //            Log.e("EditingActivity", e + "");
 //        }
 
+
         translatePreview(lettersCutSeekBar.getProgress());
+
 
 
         noTransposeNumCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -197,10 +220,10 @@ public class EditingActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.info_and_tips_menu) {
-//            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
-//            startActivity(intent);
-//        }
+        if (item.getItemId() == R.id.info_and_tips_menu) {
+            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+            startActivity(intent);
+        }
 
         if (item.getItemId() == R.id.enter_shared_code_menu) {
             AlertDialog.Builder builder = new AlertDialog.Builder(EditingActivity.this);
@@ -239,48 +262,50 @@ public class EditingActivity extends AppCompatActivity {
 
         String[] itemList = sharedCode.split("[.]");
         int num = 1;
+        try {
+            if (itemList.length < 4) {
+                throw new RuntimeException("Invalid");
+            }
             for (String item : itemList) {
-                try {
-                    if (num == 1) {
-                        if (item.matches("0")) {
-                            endPhraseEditText.setText("");
-                        }
-                        else {
-                            endPhraseEditText.setText(item);
-                        }
+                if (num == 1) {
+                    if (item.matches("0")) {
+                        endPhraseEditText.setText("");
+                    } else {
+                        endPhraseEditText.setText(item);
                     }
-                    if (num == 2) {
-                        if (Integer.valueOf(item) <= 3) {
-                            lettersCutSeekBar.setProgress(Integer.valueOf(item));
-                        } else {
-                            throw new RuntimeException("Invalid");
-                        }
-
-                    }
-                    if (num == 3) {
-                        if (Integer.valueOf(item) == 0) {
-                            noSuffixToNumCheckBox.setChecked(false);
-                        }
-                        if (Integer.valueOf(item) == 1) {
-                            noSuffixToNumCheckBox.setChecked(true);
-                        }
-                    }
-                    if (num == 4) {
-                        if (Integer.valueOf(item) == 0) {
-                            noTransposeNumCheckBox.setChecked(false);
-                        }
-                        if (Integer.valueOf(item) == 1) {
-                            noTransposeNumCheckBox.setChecked(true);
-                        }
-                    }
-                    num += 1;
-                } catch (Exception e) {
-                    Toast.makeText(this, getResources().getString(R.string.invalid_shared_code), Toast.LENGTH_LONG).show();
                 }
+                if (num == 2) {
+                    if (Integer.valueOf(item) <= 3) {
+                        lettersCutSeekBar.setProgress(Integer.valueOf(item));
+                    } else {
+                        throw new RuntimeException("Invalid");
+                    }
+
+                }
+                if (num == 3) {
+                    if (Integer.valueOf(item) == 0) {
+                        noSuffixToNumCheckBox.setChecked(false);
+                    }
+                    if (Integer.valueOf(item) == 1) {
+                        noSuffixToNumCheckBox.setChecked(true);
+                    }
+                }
+                if (num == 4) {
+                    if (Integer.valueOf(item) == 0) {
+                        noTransposeNumCheckBox.setChecked(false);
+                    }
+                    if (Integer.valueOf(item) == 1) {
+                        noTransposeNumCheckBox.setChecked(true);
+                    }
+                }
+                num += 1;
 
             }
-        Snackbar.make(findViewById(R.id.editingModeTextView), getResources().getString(R.string.shared_code_loaded), Snackbar.LENGTH_LONG).show();
-        saveValues();
+            Snackbar.make(findViewById(R.id.editingModeTextView), getResources().getString(R.string.shared_code_loaded), Snackbar.LENGTH_LONG).show();
+            saveValues();
+        }catch (Exception e) {
+            Toast.makeText(this, getResources().getString(R.string.invalid_shared_code), Toast.LENGTH_LONG).show();
+        }
     }
 
     public void goToCodeMakingActivity(View view) {

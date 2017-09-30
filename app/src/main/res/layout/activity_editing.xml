@@ -43,13 +43,14 @@
             android:layout_marginRight="5dp"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/end_phrase"
             android:textColor="#000"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:id="@+id/ending_suffix_text_view"/>
 
             <EditText
                 android:id="@+id/end_phrase_edit_text"

@@ -59,5 +59,11 @@
     <string name="shared_code_hint">Please enter code precisely</string>
     <string name="invalid_shared_code">Your shared code is invalid. Please double check you\'re typing it right.</string>
     <string name="shared_code_loaded">Your new code was loaded!</string>
-    <string name="shared_code_message">Enter the code your friend sent you. When you enter the code, you\'ll be able to decode his messages!</string>
+    <string name="shared_code_message">Enter the code your friend sent you.
+        When you enter the code, you\'ll be able to decode his messages!</string>
+    <string name="welcome_message">Welcome to Code Maker!</string>
+    <string name="subtitle_welcome_message">With Code Maker, you can easily make a secret coded
+        language that nobody but you and your friends will know.</string>
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
 </resources>

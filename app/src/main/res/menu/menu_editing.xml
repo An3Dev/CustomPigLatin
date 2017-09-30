@@ -4,9 +4,9 @@
     <item
         android:title="@string/enter_code"
         android:id="@+id/enter_shared_code_menu"/>
-    <!--<item-->
-        <!--android:title="@string/more_info"-->
-        <!--android:id="@+id/info_and_tips_menu" />-->
+    <item
+        android:title="@string/more_info"
+        android:id="@+id/info_and_tips_menu" />
 
     <!--<item-->
         <!--android:title="@string/action_settings"-->
