@@ -4,19 +4,6 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/code_maker_label"
-        android:id="@+id/info_image"
-        android:src="@drawable/ending_suffix_example"
-        android:layout_above="@+id/title_info_tips"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="105dp" />
-
     <TextView
         android:id="@+id/title_info_tips"
         android:layout_width="match_parent"
@@ -26,8 +13,10 @@
         android:textStyle="bold"
         android:textSize="30sp"
         android:textColor="@color/black"
-        android:layout_marginTop="50dp"
-        android:layout_centerInParent="true"/>
+        android:layout_marginTop="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="match_parent"
@@ -51,19 +40,5 @@
         android:onClick="goToNext"
         android:id="@+id/button2" />
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#000"
-        android:textColor="#FFF"
-        android:visibility="gone"
-        android:onClick="goBack"
-        android:id="@+id/previous_btn"
-        android:enabled="true"/>
 
 </RelativeLayout>

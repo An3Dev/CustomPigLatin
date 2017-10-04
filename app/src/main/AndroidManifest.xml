@@ -24,14 +24,16 @@
         <activity
             android:name=".DetranslatorActivity"
             android:label="@string/use_detranslator"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-
-        </activity>
-        <activity android:name=".InfoAndTips"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".InfoAndTips"
             android:label="@string/more_info"
-            android:theme="@style/AndresTheme">
-
-        </activity>
+            android:theme="@style/AndresTheme" />
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".SuffixActivity" />
+        <activity android:name=".SeekBarActivity" />
+        <activity android:name=".CoderAndDecoderActivity" />
+        <activity android:name=".OtherThingsActivity"></activity>
     </application>
 
 </manifest>

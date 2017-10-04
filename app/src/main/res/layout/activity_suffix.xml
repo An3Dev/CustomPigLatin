@@ -5,39 +5,45 @@
     android:layout_margin="16dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/code_maker_label"
         android:id="@+id/info_image"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/code_maker_label"
+        android:cropToPadding="false"
         android:src="@drawable/ending_suffix_example"
-        android:layout_above="@+id/title_info_tips"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="105dp" />
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="74dp" />
 
     <TextView
         android:id="@+id/title_info_tips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/welcome_message"
+        android:text="@string/suffix_info_title"
         android:textStyle="bold"
         android:textSize="30sp"
         android:textColor="@color/black"
-        android:layout_marginTop="50dp"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/subtitle_welcome_message"
+        android:text="@string/suffix_info_subtitle"
         android:textColor="#787878"
-        android:layout_below="@+id/title_info_tips"
-        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:id="@+id/subtitle_info_tips"/>
+        android:id="@+id/subtitle_info_tips"
+        android:layout_below="@+id/title_info_tips"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="33dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -61,9 +67,9 @@
         android:layout_alignParentStart="true"
         android:background="#000"
         android:textColor="#FFF"
-        android:visibility="gone"
         android:onClick="goBack"
         android:id="@+id/previous_btn"
         android:enabled="true"/>
+
 
 </RelativeLayout>
