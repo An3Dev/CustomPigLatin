@@ -1,69 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
+    <VideoView
+        android:id="@+id/myVideo"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/code_maker_label"
-        android:id="@+id/info_image"
-        android:src="@drawable/ending_suffix_example"
-        android:layout_above="@+id/title_info_tips"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="105dp" />
+        android:layout_centerInParent="true" />
 
-    <TextView
-        android:id="@+id/title_info_tips"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/welcome_message"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="50dp"
-        android:layout_centerInParent="true"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/subtitle_welcome_message"
-        android:textColor="#787878"
-        android:layout_below="@+id/title_info_tips"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:id="@+id/subtitle_info_tips"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="@string/next_button"
-        android:background="#000"
-        android:textColor="#FFF"
-        android:onClick="goToNext"
-        android:id="@+id/button2" />
+        android:weightSum="2"
+        android:layout_below="@id/myVideo">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/use_app_button"
+            android:text="@string/use_app" android:layout_weight="1"/>
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#000"
-        android:textColor="#FFF"
-        android:visibility="gone"
-        android:onClick="goBack"
-        android:id="@+id/previous_btn"
-        android:enabled="true"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/play_tutorial"
+            android:id="@+id/playVideo"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+
 
 </RelativeLayout>

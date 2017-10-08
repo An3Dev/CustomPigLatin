@@ -90,8 +90,8 @@ public class EditingActivity extends AppCompatActivity {
             editor.commit();
         }
 
-        Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
-        startActivity(intent);
+//        Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+//        startActivity(intent);
 
         endPhraseEditText = (EditText) findViewById(R.id.end_phrase_edit_text);
         editingModeTextView = (TextView) findViewById(R.id.editingModeTextView);

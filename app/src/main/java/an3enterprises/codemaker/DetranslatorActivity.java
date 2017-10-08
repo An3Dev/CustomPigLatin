@@ -338,7 +338,7 @@ public class DetranslatorActivity extends AppCompatActivity {
 
             numOfErrors += 1;
 
-            if (numOfErrors > 5) {
+            if (numOfErrors > 100) {
                 numOfErrors = 0;
 
                 if (this.getCurrentFocus() != null) {

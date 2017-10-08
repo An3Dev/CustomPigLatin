@@ -370,7 +370,7 @@ public class TranslatorActivity extends AppCompatActivity implements TextToSpeec
         } catch (final Exception e) {
             numOfErrors += 1;
 
-            if (numOfErrors > 5) {
+            if (numOfErrors > 100) {
                 numOfErrors = 0;
 
                 //This won't allow app to crash
