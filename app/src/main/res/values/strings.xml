@@ -69,13 +69,13 @@
     <string name="play_tutorial">Play Video</string>
     <string name="use_app">Start Editing</string>
     <string name="suffix_title">The Ending Suffix</string>
-    <string name="suffix_explanation">The Ending Suffix is the letter or group of letters that is added to every word you type in the Encoder.\n\nExample:\n\n If \"ay\" is the Ending Suffix\n\n \"Hello!\" → \"Helloay!\"</string>
+    <string name="suffix_explanation">The Ending Suffix is the letter or group of letters that is added to every word you type in the Encoder.\n\nExample:\n\n If \"ay\" is the Ending Suffix\n\n \"Hello!\" ⟶ \"Helloay!\"</string>
     <string name="letters_to_end_title">Number of Letters Moved to End</string>
-    <string name="letters_to_end_explanation">Number of Letters Moved to End is how many letters are moved from the beginning of every word to the end.\n\nExample:\n\n If Number of Letters Moved To End is 1\n\n \"Hello!\" → \"Elloh!\".</string>
+    <string name="letters_to_end_explanation">Number of Letters Moved to End is how many letters are moved from the beginning of every word to the end.\n\nExample:\n\n If Number of Letters Moved To End is 1\n\n \"Hello!\" ⟶ \"Elloh!\".</string>
     <string name="no_suffix_to_num_title">Do Not Add Suffix to Numbers Checkbox</string>
-    <string name="no_suffix_to_num_explanation">If you uncheck the \"Do not add suffix to numbers\" checkbox, then the Ending Suffix will be added to the end of numbers.\n\nExample:\n\n If Number of Letters Moved to End is 0 and the Ending Phrase is \"ay\"\n\n\"I have 1 dog.\" → \"Iay haveay 1ay dogay.\"</string>
+    <string name="no_suffix_to_num_explanation">If you uncheck the \"Do not add suffix to numbers\" checkbox, then the Ending Suffix will be added to the end of numbers.\n\nExample:\n\n If Number of Letters Moved to End is 0 and the Ending Suffix is \"ay\"\n\n\"I have 1 dog.\" ⟶ \"Iay haveay 1ay dogay.\"</string>
     <string name="no_move_num_title">Do Not Move Numbers Checkbox</string>
-    <string name="no_move_num_explanation">If you uncheck the \"Do Not Move Numbers\" checkbox, then a number that has more than one digit will be moved to the end depending on the Number of Letters Moved to End.\n\nExample: \nIf Number of Letters Moved to End is 1.\n\n \"I was born in 1990.\" → \"I asw ornb ni 9901.\"</string>
+    <string name="no_move_num_explanation">If you uncheck the \"Do Not Move Numbers\" checkbox, then the first digits of a number will be transposed to the end depending on the Number of Letters Moved to End.\n\nExample:\n\nIf Number of Letters Moved to End is 1.\n\n \"I was born in 1990.\" ⟶ \"I asw ornb ni 9901.\"</string>
 
     <string name="info_and_tips">Information</string>
     <string name="back">Back</string>
