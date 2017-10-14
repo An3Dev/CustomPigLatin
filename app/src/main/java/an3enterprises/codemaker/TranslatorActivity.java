@@ -209,8 +209,6 @@ public class TranslatorActivity extends AppCompatActivity implements TextToSpeec
 
                 originalWord = word;
                 completedSentence = "";
-//            String test = "done.";
-
 
                 if (word.contains(".") || word.contains(",") || word.contains("?") || word.contains("!") || word.contains(":") || word.contains(";")) {
                     try {

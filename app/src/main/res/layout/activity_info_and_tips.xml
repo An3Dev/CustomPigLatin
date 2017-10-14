@@ -1,39 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <VideoView
-        android:id="@+id/myVideo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
-    <LinearLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:textColor="#000"
+            android:text="@string/info_and_tips"
+            android:id="@+id/title_info"
+            android:layout_alignParentTop="true"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayoutInfoTips"
+            android:layout_below="@+id/title_info">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/suffix_title"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="30sp"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/suffix_explanation"
+                android:layout_margin="16dp"/>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayoutLettersToEnd"
+            android:layout_below="@+id/linearLayoutInfoTips">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/letters_to_end_title"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="30sp"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/letters_to_end_explanation"
+                android:layout_margin="16dp"/>
+
+
+
+        </LinearLayout>
+
+
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:text="@string/back"
         android:layout_alignParentBottom="true"
-        android:weightSum="2"
-        android:layout_below="@id/myVideo">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayoutLettersToEnd"
+        android:layout_margin="16dp"
+        android:background="#000"
+        android:textColor="#FFF"
+        android:onClick="goToEditMode"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/use_app_button"
-            android:text="@string/use_app" android:layout_weight="1"/>
+    </RelativeLayout>
 
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/play_tutorial"
-            android:id="@+id/playVideo"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-
-
-
-</RelativeLayout>
+</ScrollView>
