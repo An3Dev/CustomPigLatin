@@ -13,11 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="40sp"
-            android:textColor="#000"
             android:text="@string/info_and_tips"
             android:id="@+id/title_info"
             android:layout_alignParentTop="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,20 +74,75 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayoutNoSuffixNum"
+            android:layout_below="@+id/linearLayoutLettersToEnd">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_suffix_to_num_title"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="30sp"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/no_suffix_to_num_explanation"
+                android:layout_margin="16dp"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/linearLayoutNoMoveNum"
+            android:layout_below="@+id/linearLayoutNoSuffixNum">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_move_num_title"
+                android:gravity="center"
+                android:layout_margin="16dp"
+                android:textSize="30sp"
+                android:textColor="#000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/no_move_num_explanation"
+                android:layout_margin="16dp"/>
+
+
+
+        </LinearLayout>
+
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:layout_alignParentBottom="true"
+        android:text="@string/go_to_edit_mode"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayoutLettersToEnd"
+        android:layout_below="@+id/linearLayoutNoMoveNum"
         android:layout_margin="16dp"
         android:background="#000"
         android:textColor="#FFF"
-        android:onClick="goToEditMode"/>
+        android:onClick="goToEditMode"
+        android:padding="16dp"
+        android:id="@+id/back_button"/>
 
     </RelativeLayout>
 

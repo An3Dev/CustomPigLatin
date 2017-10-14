@@ -93,7 +93,9 @@ public class DetranslatorActivity extends AppCompatActivity {
         }
 
 
-
+        if (input.getText().toString().isEmpty()) {
+            output.setText("");
+        }
 
 
         input.addTextChangedListener(new TextWatcher() {
@@ -124,7 +126,10 @@ public class DetranslatorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        Intent intent = new Intent(DetranslatorActivity.this, TranslatorActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        saveInput();
     }
 
     public void goToEditMode(View view) {

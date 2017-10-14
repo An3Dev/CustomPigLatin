@@ -131,7 +131,10 @@ public class TranslatorActivity extends AppCompatActivity implements TextToSpeec
 
     @Override
     public void onBackPressed() {
-
+        Intent intent = new Intent(TranslatorActivity.this, DetranslatorActivity.class);
+        startActivity(intent);
+        saveInput();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     //speak the user text

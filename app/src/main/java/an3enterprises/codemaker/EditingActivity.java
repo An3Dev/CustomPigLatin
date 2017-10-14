@@ -79,8 +79,8 @@ public class EditingActivity extends AppCompatActivity {
         if (!prefs.getBoolean("firstTime", false)) {
             // <---- run your one time code here
 
-//            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
-//            startActivity(intent);
+            Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
+            startActivity(intent);
 
 
 
@@ -89,9 +89,6 @@ public class EditingActivity extends AppCompatActivity {
             editor.putBoolean("firstTime", true);
             editor.commit();
         }
-
-//        Intent intent = new Intent(EditingActivity.this, InfoAndTips.class);
-//        startActivity(intent);
 
         endPhraseEditText = (EditText) findViewById(R.id.end_phrase_edit_text);
         editingModeTextView = (TextView) findViewById(R.id.editingModeTextView);
