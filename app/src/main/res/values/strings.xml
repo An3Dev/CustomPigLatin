@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Code Maker</string>
+    <string name="app_name">Custom Pig Latin</string>
     <string name="editing_mode">Edit Mode</string>
-    <string name="code_maker_label">Code Maker</string>
+    <string name="code_maker_label">Custom Pig Latin</string>
     <string name="end_phrase">Ending Suffix</string>
     <string name="example_ay">Enter a suffix; like \"ay\"</string>
     <string name="starting_cut">Number of Letters Moved to End</string>
@@ -25,7 +25,7 @@
     <string name="use_translator">Encoder</string>
     <string name="share_app">Share PigLatin Translator</string>
     <string name="get_pig_latin_translator_share">Hey! You should get PigLatin Translator by An3Enterprises.</string>
-    <string name="make_own_language">Make your own language</string>
+    <string name="make_own_language">Make your own custom pig latin language</string>
     <string name="edit_mode_title">Editing Mode</string>
     <string name="editing_mode_switch">Editing Mode On</string>
     <string name="editing_mode_switch_off">Editing Mode Off</string>
@@ -50,8 +50,8 @@
     <string name="speak">Speak</string>
     <string name="extras">Extras</string>
     <string name="save_share_friends">Share Your Code\nWith Friends</string>
-    <string name="invitation">"Install Code Maker at https://play.google.com/store/apps/details?id=an3enterprises.codemaker. Tap on the three dot menu at the top right of the screen. Select "Enter Shared Code". Then type in the following code: "</string>
-    <string name="app_url">https://play.google.com/store/apps/details?id=an3enterprises.codemaker</string>
+    <string name="invitation">"Install Custom Pig Latin at https://play.google.com/store/apps/details?id=an3enterprises.custompiglatin. Tap on the three dot menu at the top right of the screen. Select "Enter Shared Code". Then type in the following code: "</string>
+    <string name="app_url">https://play.google.com/store/apps/details?id=an3enterprises.custompiglatin</string>
     <string name="enter_code">Enter Shared Code</string>
     <string name="done_alert_dialog">Done</string>
     <string name="shared_code_hint">Please enter code precisely</string>
@@ -59,8 +59,8 @@
     <string name="shared_code_loaded">Your new code was loaded!</string>
     <string name="shared_code_message">Enter the code your friend sent you.
         When you enter the code, you\'ll be able to decode his messages!</string>
-    <string name="welcome_message">Welcome to Code Maker!</string>
-    <string name="subtitle_welcome_message">With Code Maker, you can easily make a secret coded
+    <string name="welcome_message">Welcome to Custom Pig Latin!</string>
+    <string name="subtitle_welcome_message">With Custom Pig Latin, you can easily make a secret coded
         language that nobody but you and your friends will know.</string>
     <string name="next_button">Next</string>
     <string name="previous_button">Previous</string>

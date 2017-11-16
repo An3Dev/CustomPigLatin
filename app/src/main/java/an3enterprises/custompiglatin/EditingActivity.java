@@ -1,4 +1,4 @@
-package an3enterprises.codemaker;
+package an3enterprises.custompiglatin;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import an3enterprises.codemaker.R;
 
 public class EditingActivity extends AppCompatActivity {
 
